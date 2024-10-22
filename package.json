@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
-    "start:frontend": "cd TPO-BDII-frontend && ng serve",
-    "start:backend": "cd TPO-BDII-backend && nodemon server.js"
+    "start:frontend": "cd TPO-BDII-frontend && npm start",
+    "start:backend": "cd TPO-BDII-backend && npm start"
   },
   "devDependencies": {
     "concurrently": "^6.5.1"
