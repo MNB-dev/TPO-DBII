@@ -1,8 +1,8 @@
 import express from 'express';
-import hotelRoute from './hotelRoute'; 
+import hotelController from '../controller/hotel.controller'; 
 
 const router = express.Router();
 
-router.use('/hoteles', hotelRoute);
+router.use('/hoteles', hotelController);
 
 export default router;

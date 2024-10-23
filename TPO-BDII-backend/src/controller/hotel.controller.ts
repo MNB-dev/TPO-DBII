@@ -1,14 +1,14 @@
 import express, { Request, Response } from 'express';
 import { body, param, validationResult } from 'express-validator';
 import { Hotel } from '../model/Hotel';
-import HotelDao from '../dao/HotelDAO';
+import HotelService from '../service/hotel.service';
 
 const router = express.Router();
-const hotelDao = new HotelDao();
+const hotelService = new HotelService();
 
 // Obtener todos los hoteles
 router.get('/', async (req: Request, res: Response) => {
-    const response = await hotelDao.getAll();
+    const response = await hotelService.getAll();
     res.json(response);
 });
 
@@ -32,7 +32,7 @@ router.post('/', validateHotelCreation, async (req: Request, res: Response) => {
 
     const hotel: Hotel = req.body;
     try {
-        const response = await hotelDao.createHotel(hotel);
+        const response = await hotelService.createHotel(hotel);
         res.status(201).json(response);
     } catch (error: any) {
         res.status(500).json({ message: error.message });
@@ -52,7 +52,7 @@ router.get('/:id', validateHotelId, async (req: Request, res: Response) => {
     }
 
     try {
-        const hotel = await hotelDao.getHotel(req.params.id);
+        const hotel = await hotelService.getHotel(req.params.id);
         if (hotel) {
             res.json(hotel);
         } else {
@@ -83,7 +83,7 @@ router.put('/:id', validateHotelId, validateHotelUpdate, async (req: Request, re
     }
 
     try {
-        const response = await hotelDao.updateHotel(req.params.id, req.body);
+        const response = await hotelService.updateHotel(req.params.id, req.body);
         res.json(response);
     } catch (error) {
         res.status(404).json({ message: 'Hotel no encontrado' });
@@ -98,7 +98,7 @@ router.delete('/:id', validateHotelId, async (req: Request, res: Response) => {
     }
 
     try {
-        await hotelDao.deleteHotel(req.params.id);
+        await hotelService.deleteHotel(req.params.id);
         res.status(204).send();
     } catch (error) {
         res.status(404).json({ message: 'Hotel no encontrado' });
