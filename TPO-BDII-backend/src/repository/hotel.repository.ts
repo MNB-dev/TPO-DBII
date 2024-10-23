@@ -1,12 +1,16 @@
+import { Hotel } from '../model/Hotel';
 import { hotelModel, POI, Habitacion } from '../schemas/HotelSchema';
 
 class ContenedorHotelMongoDb {
   constructor() {}
 
-  async getAll() {
+  async getAll(): Promise<Hotel[]> {
     try {
-      const productos = await hotelModel.find();
-      return productos;
+      const productos = await hotelModel.find().lean();
+      return productos.map((data: any) => ({
+        ...data,
+        id: data._id,
+      }));
     } catch (e:any) {
       throw new Error(e);
     }
@@ -23,17 +27,7 @@ class ContenedorHotelMongoDb {
     }
   }
 
-  async getAllHotels(): Promise<any[]> {
-    try {
-      const hotels = await hotelModel.find({});
-      return hotels;
-    } catch (e) {
-      console.log(e);
-      throw new Error(e instanceof Error ? e.message : "Error al obtener los hoteles.");
-    }
-  }
-
-  async createHotel(hotelData: any): Promise<string> {
+  async createHotel(hotelData: Hotel): Promise<string> {
     try {
       const hotel = new hotelModel(hotelData);
       const savedHotel = await hotel.save();
@@ -44,7 +38,7 @@ class ContenedorHotelMongoDb {
     }
   }
 
-  async updateHotel(id: string, hotelData: any): Promise<string> {
+  async updateHotel(id: string, hotelData: Hotel): Promise<string> {
     try {
       const hotel = await hotelModel.findByIdAndUpdate(id, hotelData, { new: true });
       if (!hotel) return "El hotel no existe.";

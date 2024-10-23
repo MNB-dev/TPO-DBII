@@ -15,10 +15,6 @@ class HotelService {
     return await this.repo.getHotel(id);
   }
 
-  async getAllHotels(): Promise<any[]> {
-    return await this.repo.getAllHotels();
-  }
-
   async createHotel(hotelData: any): Promise<string> {
     return await this.repo.createHotel(hotelData);
   }

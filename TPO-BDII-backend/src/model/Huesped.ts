@@ -11,4 +11,5 @@ export interface Huesped {
         provincia: string; // Provincia
         pais: string; // País
     };
+    id_hotel: number; // Identificador único del hotel con que se relaciona
 }
