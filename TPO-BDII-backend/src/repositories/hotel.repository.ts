@@ -1,4 +1,4 @@
-import { Hotel } from '../model/Hotel';
+import { Hotel } from '../models/Hotel';
 import { hotelModel, POI, Habitacion } from '../schemas/HotelSchema';
 
 class ContenedorHotelMongoDb {

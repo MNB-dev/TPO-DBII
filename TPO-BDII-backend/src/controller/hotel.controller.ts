@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body, param, validationResult } from 'express-validator';
-import { Hotel } from '../model/Hotel';
-import HotelService from '../service/hotel.service';
+import { Hotel } from '../models/Hotel';
+import HotelService from '../services/hotel.service';
 
 const router = express.Router();
 const hotelService = new HotelService();

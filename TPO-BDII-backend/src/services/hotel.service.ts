@@ -1,4 +1,5 @@
-import HotelRepositorio from '../repository/hotel.repository';
+import { Hotel } from '../models/Hotel';
+import HotelRepositorio from '../repositories/hotel.repository';
 
 class HotelService {
   private repo: HotelRepositorio;
@@ -7,11 +8,11 @@ class HotelService {
     this.repo = new HotelRepositorio();
   }
 
-  async getAll() {
+  async getAll(): Promise<Hotel[]> {
     return await this.repo.getAll();
   }
 
-  async getHotel(id: string): Promise<any | string> {
+  async getHotel(id: string): Promise<Hotel | string> {
     return await this.repo.getHotel(id);
   }
 
