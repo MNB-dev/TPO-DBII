@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
 })
 export class HotelComponent implements OnInit {
   private subscriptions: Subscription[] = [];
-  readonly columns: string[] = ['id', 'nombre', 'direccion', 'telefono', 'correoElectronico', 'Zona'];
+  readonly columns: string[] = ['_id', 'nombre', 'direccion', 'telefono', 'correoElectronico', 'zona'];
   dataSource!: MatTableDataSource<Hotel>;
   hoteles: Hotel[] | undefined;
 
