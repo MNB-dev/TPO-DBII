@@ -1,15 +1,5 @@
 import mongoose from "../db/mongo-db";
 
-interface POI {
-  nombre: string;
-  valor: string;
-}
-
-interface Habitacion {
-  tipo: string;
-  amenities: string[];
-}
-
 const hotelSchema = new mongoose.Schema({
   nombre: {
     type: String,
@@ -30,17 +20,9 @@ const hotelSchema = new mongoose.Schema({
   zona: {
     type: String,
     required: true,
-  },
-  pois: [{
-    nombre: String,
-    valor: String,
-  }],
-  habitaciones: [{
-    tipo: String,
-    amenities: [String],
-  }],
+  }
 });
 
 const hotelModel = mongoose.model("hotel", hotelSchema);
 
-export { hotelModel, POI, Habitacion };
+export { hotelModel };

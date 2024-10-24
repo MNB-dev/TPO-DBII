@@ -1,8 +1,15 @@
+import { Habitacion } from '../models/Habitacion';
 import { Hotel } from '../models/Hotel';
-import { hotelModel, POI, Habitacion } from '../schemas/HotelSchema';
+import { hotelModel } from '../schemas/HotelSchema';
+import HabitacionRepository from './habitacion.repository';
 
-class ContenedorHotelMongoDb {
-  constructor() {}
+class HotelRepositorio {
+
+  habitacionRepository: any;
+
+  constructor() {
+    this.habitacionRepository = new HabitacionRepository();
+  }
 
   async getAll(): Promise<Hotel[]> {
     try {
@@ -29,14 +36,27 @@ class ContenedorHotelMongoDb {
 
   async createHotel(hotelData: Hotel): Promise<string> {
     try {
-      const hotel = new hotelModel(hotelData);
-      const savedHotel = await hotel.save();
-      return `Se creó un hotel con id: ${savedHotel.id}`;
+        let habitaciones = hotelData.habitaciones || [];
+        let habitacionesIds: number[] = [];
+
+        const nuevasHabitaciones: Habitacion[] = await Promise.all(
+          (habitaciones as Habitacion[]).map(async (habitacionData) => {
+              return await this.habitacionRepository.create(habitacionData);
+          })
+      );
+
+        const hotel = new hotelModel({
+            ...hotelData
+        });
+
+        const savedHotel = await hotel.save();
+        return `Se creó un hotel con id: ${savedHotel.id}`;
     } catch (e) {
-      console.log(e);
-      throw new Error(e instanceof Error ? e.message : "Error al crear el hotel.");
+        console.log(e);
+        throw new Error(e instanceof Error ? e.message : "Error al crear el hotel.");
     }
   }
+
 
   async updateHotel(id: string, hotelData: Hotel): Promise<string> {
     try {
@@ -61,4 +81,4 @@ class ContenedorHotelMongoDb {
   }
 }
 
-export default ContenedorHotelMongoDb;
+export default HotelRepositorio;
